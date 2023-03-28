@@ -25,8 +25,12 @@ class VideoController extends BackEndController
         $array = [
             'categories' => Category::get(),
             'skills' => Skill::get(),
-            'selectedSkills' => ''
+            'selectedSkills' => []
         ];
+
+        if (request()->route()->parameter('video')) {
+            $array['selectedSkills'] = $this->model->find(request()->route()->parameter('video'))->skills()->get()->pluck('id')->toArray();
+        }
         return $array;
     }
 

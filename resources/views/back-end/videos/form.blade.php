@@ -146,7 +146,7 @@
     <div class="input-group mb-5">
         <select name="{{ $input }}" multiple>
             @foreach ($skills as $skill)
-                <option value="{{ $skill->id }}">
+                <option value="{{ $skill->id }}" {{ in_array($skill->id, $selectedSkills) ? 'selected' : '' }}>
                     {{ $skill->name }}
                 </option>
             @endforeach
