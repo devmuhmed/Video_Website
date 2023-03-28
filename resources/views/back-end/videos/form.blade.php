@@ -138,3 +138,23 @@
         @enderror
     </div>
 </div>
+<div class="col-md-6">
+    @php
+        $input = 'skills[]';
+    @endphp
+    <label for="{{ $input }}">Skills</label>
+    <div class="input-group mb-5">
+        <select name="{{ $input }}" multiple>
+            @foreach ($skills as $skill)
+                <option value="{{ $skill->id }}">
+                    {{ $skill->name }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+    @error($input)
+        <span class="text-danger" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+    @enderror
+</div>

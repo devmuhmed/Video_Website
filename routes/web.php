@@ -24,7 +24,7 @@ use App\Http\Controllers\BackEnd\CategoryController;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::group(['prefix' => 'admin' , 'middleware' => 'auth'], function () {
+Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::get('/', [HomeController::class, 'index']);
     Route::resource('users', UserController::class)->except('show');
     Route::resource('categories', CategoryController::class)->except('show');

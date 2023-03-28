@@ -5,6 +5,7 @@ namespace App\Http\Controllers\BackEnd;
 use App\Http\Requests\Video\StoreRequest;
 use App\Http\Controllers\BackEnd\BackEndController;
 use App\Models\Category;
+use App\Models\Skill;
 use App\Models\Video;
 
 class VideoController extends BackEndController
@@ -21,32 +22,32 @@ class VideoController extends BackEndController
 
     protected function append()
     {
-        return [
+        $array = [
             'categories' => Category::get(),
+            'skills' => Skill::get(),
+            'selectedSkills' => ''
         ];
+        return $array;
     }
-    public function store(StoreRequest $request)
+
+    public function store(Video $video, StoreRequest $request)
     {
-        $this->model->create($request->validated() + ['user_id' => auth()->id()]);
+        $requestArray = $request->all();
+        $video = $this->model->create($request->validated() + ['user_id' => auth()->id()]);
+
+        if (isset($requestArray['skills']) && !empty($requestArray['skills'])) {
+            $video->skills()->sync($requestArray['skills']);
+        }
 
         return redirect()->route('videos.index');
     }
 
-    public function edit($id)
-    {
-        $row = $this->model->findOrFail($id);
-
-        $moduleName = $this->getModelName();
-        $title = 'Edit ' . $moduleName;
-        $pageDesc = 'Here you can edit ' . $moduleName;
-        $routeName = $this->getClassNameFromModel();
-        $categories = Category::get();
-
-        return view('back-end.' . $routeName . '.edit', compact('row', 'title', 'moduleName', 'pageDesc', 'routeName', 'categories'));
-    }
-
     public function update(Video $video, StoreRequest $request)
     {
+        $requestArray = $request->all();
+        if (isset($requestArray['skills']) && !empty($requestArray['skills'])) {
+            $video->skills()->sync($requestArray['skills']);
+        }
         $video->update($request->validated());
 
         return redirect()->route('videos.index');
