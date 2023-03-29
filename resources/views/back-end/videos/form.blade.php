@@ -138,23 +138,45 @@
         @enderror
     </div>
 </div>
-<div class="col-md-6">
-    @php
-        $input = 'skills[]';
-    @endphp
-    <label for="{{ $input }}">Skills</label>
-    <div class="input-group mb-5">
-        <select name="{{ $input }}" multiple>
-            @foreach ($skills as $skill)
-                <option value="{{ $skill->id }}" {{ in_array($skill->id, $selectedSkills) ? 'selected' : '' }}>
-                    {{ $skill->name }}
-                </option>
-            @endforeach
-        </select>
+<div class="row">
+    <div class="col-md-6">
+        @php
+            $input = 'tags[]';
+        @endphp
+        <label for="{{ $input }}">Tags</label>
+        <div class="input-group mb-5">
+            <select name="{{ $input }}" multiple>
+                @foreach ($tags as $tag)
+                    <option value="{{ $tag->id }}" {{ in_array($tag->id, $selectedTags) ? 'selected' : '' }}>
+                        {{ $tag->name }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+        @error($input)
+            <span class="text-danger" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+        @enderror
     </div>
-    @error($input)
-        <span class="text-danger" role="alert">
-            <strong>{{ $message }}</strong>
-        </span>
-    @enderror
+    <div class="col-md-6">
+        @php
+            $input = 'skills[]';
+        @endphp
+        <label for="{{ $input }}">Skills</label>
+        <div class="input-group mb-5">
+            <select name="{{ $input }}" multiple>
+                @foreach ($skills as $skill)
+                    <option value="{{ $skill->id }}" {{ in_array($skill->id, $selectedSkills) ? 'selected' : '' }}>
+                        {{ $skill->name }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+        @error($input)
+            <span class="text-danger" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+        @enderror
+    </div>
 </div>

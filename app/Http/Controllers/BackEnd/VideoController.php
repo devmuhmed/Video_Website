@@ -6,6 +6,7 @@ use App\Http\Requests\Video\StoreRequest;
 use App\Http\Controllers\BackEnd\BackEndController;
 use App\Models\Category;
 use App\Models\Skill;
+use App\Models\Tag;
 use App\Models\Video;
 
 class VideoController extends BackEndController
@@ -25,11 +26,14 @@ class VideoController extends BackEndController
         $array = [
             'categories' => Category::get(),
             'skills' => Skill::get(),
-            'selectedSkills' => []
+            'tags' => Tag::get(),
+            'selectedSkills' => [],
+            'selectedTags' => [],
         ];
 
         if (request()->route()->parameter('video')) {
-            $array['selectedSkills'] = $this->model->find(request()->route()->parameter('video'))->skills()->get()->pluck('id')->toArray();
+            $array['selectedSkills'] = $this->model->find(request()->route()->parameter('video'))->skills()->pluck('skills.id')->toArray();
+            $array['selectedTags'] = $this->model->find(request()->route()->parameter('video'))->tags()->pluck('tags.id')->toArray();
         }
         return $array;
     }
@@ -42,6 +46,9 @@ class VideoController extends BackEndController
         if (isset($requestArray['skills']) && !empty($requestArray['skills'])) {
             $video->skills()->sync($requestArray['skills']);
         }
+        if (isset($requestArray['tags']) && !empty($requestArray['tags'])) {
+            $video->tags()->sync($requestArray['tags']);
+        }
 
         return redirect()->route('videos.index');
     }
@@ -52,6 +59,10 @@ class VideoController extends BackEndController
         if (isset($requestArray['skills']) && !empty($requestArray['skills'])) {
             $video->skills()->sync($requestArray['skills']);
         }
+        if (isset($requestArray['tags']) && !empty($requestArray['tags'])) {
+            $video->tags()->sync($requestArray['tags']);
+        }
+
         $video->update($request->validated());
 
         return redirect()->route('videos.index');

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Tag;
 use App\Models\User;
 use App\Models\Skill;
 use App\Models\Category;
@@ -27,5 +28,10 @@ class Video extends Model
     public function skills()
     {
         return $this->belongsToMany(Skill::class);
+    }
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
     }
 }

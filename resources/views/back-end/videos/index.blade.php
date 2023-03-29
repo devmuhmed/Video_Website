@@ -45,8 +45,13 @@
                                     class="text-dark fw-bolder text-hover-primary mb-1 fs-6">{{ $row->name }}</a>
                             </td>
                             <td>
-                                <a href="#"
-                                    class="text-dark fw-bolder text-hover-primary mb-1 fs-6">{{ $row->published }}</a>
+                                <a href="#" class="text-dark fw-bolder text-hover-primary mb-1 fs-6">
+                                    @if ($row->published == 1)
+                                        <span class="badge badge-light-success">Published</span>
+                                    @else
+                                        <span class="badge badge-light-danger">Hidden</span>
+                                    @endif
+                                </a>
                             </td>
                             <td>
                                 <a href="#"
