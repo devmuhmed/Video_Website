@@ -16,5 +16,15 @@
                     {{ $moduleName }}</button>
             </div>
         </form>
+
+        @slot('md4')
+            @php
+                $url = getYoutubeId($row->youtube);
+            @endphp
+            @if ($url)
+                <iframe width="350" height="400" src="https://www.youtube.com/embed/{{ $url }}"
+                    title="YouTube video player" frameborder="0" allowfullscreen></iframe>
+            @endif
+        @endslot
     @endcomponent
 @endsection
