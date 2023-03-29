@@ -42,13 +42,7 @@ class VideoController extends BackEndController
     {
         $requestArray = $request->all();
         $video = $this->model->create($request->validated() + ['user_id' => auth()->id()]);
-
-        if (isset($requestArray['skills']) && !empty($requestArray['skills'])) {
-            $video->skills()->sync($requestArray['skills']);
-        }
-        if (isset($requestArray['tags']) && !empty($requestArray['tags'])) {
-            $video->tags()->sync($requestArray['tags']);
-        }
+        $this->syncTagsSkills($video, $requestArray);
 
         return redirect()->route('videos.index');
     }
@@ -56,15 +50,20 @@ class VideoController extends BackEndController
     public function update(Video $video, StoreRequest $request)
     {
         $requestArray = $request->all();
+        $this->syncTagsSkills($video, $requestArray);
+
+        $video->update($request->validated());
+
+        return redirect()->route('videos.index');
+    }
+
+    public function syncTagsSkills($video, $requestArray)
+    {
         if (isset($requestArray['skills']) && !empty($requestArray['skills'])) {
             $video->skills()->sync($requestArray['skills']);
         }
         if (isset($requestArray['tags']) && !empty($requestArray['tags'])) {
             $video->tags()->sync($requestArray['tags']);
         }
-
-        $video->update($request->validated());
-
-        return redirect()->route('videos.index');
     }
 }
