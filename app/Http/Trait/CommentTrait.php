@@ -26,6 +26,6 @@ trait CommentTrait
     {
         $comment->update($request->validated());
 
-        return redirect()->back();
+        return redirect()->route('videos.edit', ['video' => $comment->video_id, '#comments']);
     }
 }
