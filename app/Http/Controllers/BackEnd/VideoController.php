@@ -10,9 +10,12 @@ use Illuminate\Support\Str;
 use App\Http\Requests\Video\StoreRequest;
 use App\Http\Controllers\BackEnd\BackEndController;
 use App\Http\Requests\Video\UpdateRequest;
+use App\Http\Trait\CommentTrait;
 
 class VideoController extends BackEndController
 {
+    use CommentTrait;
+
     public function __construct(Video $model)
     {
         parent::__construct($model);
@@ -31,11 +34,13 @@ class VideoController extends BackEndController
             'tags' => Tag::get(),
             'selectedSkills' => [],
             'selectedTags' => [],
+            'comments' => [],
         ];
 
         if (request()->route()->parameter('video')) {
             $array['selectedSkills'] = $this->model->find(request()->route()->parameter('video'))->skills()->pluck('skills.id')->toArray();
             $array['selectedTags'] = $this->model->find(request()->route()->parameter('video'))->tags()->pluck('tags.id')->toArray();
+            $array['comments'] = $this->model->find(request()->route()->parameter('video'))->comments()->orderBy('id', 'desc')->with('user')->get();
         }
         return $array;
     }

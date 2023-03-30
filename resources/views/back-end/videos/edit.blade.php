@@ -25,4 +25,15 @@
                 <iframe width="350" src="https://www.youtube.com/embed/{{ $url }}" title="YouTube video player"
                     frameborder="0" allowfullscreen class="mb-5"></iframe>
             @endif
-            <img width="350" src="{{ url('uploads/' . $row->image) }}" @endslot @endcomponent @endsection
+            <img width="350" src="{{ url('uploads/' . $row->image) }}">
+        @endslot
+    @endcomponent
+    <div class="row">
+        <div class="col-md-8">
+            @include('back-end.comments.index')
+        </div>
+        <div class="col-md-2">
+            @include('back-end.comments.create')
+        </div>
+    </div>
+@endsection

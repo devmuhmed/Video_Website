@@ -32,6 +32,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::resource('tags', TagController::class)->except('show');
     Route::resource('pages', PageController::class)->except('show');
     Route::resource('videos', VideoController::class)->except('show');
+    Route::post('comments', [VideoController::class, 'commentStore'])->name('comments.store');
+    Route::get('comments/{comment}', [VideoController::class, 'commentDelete'])->name('comments.destroy');
+    Route::put('comments/{comment}', [VideoController::class, 'commentUpdate'])->name('comments.update');
 });
 
 Auth::routes();
