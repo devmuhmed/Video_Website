@@ -77,9 +77,7 @@
         @endphp
         <label for="{{ $input }}">Video {{ $input }}</label>
         <div class="input-group mb-5">
-            <input type="url" class="form-control" placeholder="{{ $input }}" name="{{ $input }}"
-                aria-label="{{ $input }}" value="{{ isset($row) ? $row->{$input} : '' }}"
-                aria-describedby="basic-addon1" id="{{ $input }}" />
+            <input type="file" class="form-control" name="{{ $input }}" id="{{ $input }}" />
         </div>
         @error($input)
             <span class="text-danger" role="alert">

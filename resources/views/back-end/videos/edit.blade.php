@@ -8,7 +8,7 @@
 
 @section('content')
     @component('back-end.shared.edit', ['title' => $title, 'pageDesc' => $pageDesc, 'routeName' => $routeName])
-        <form action="{{ route($routeName . '.update', $row) }}" method="post">
+        <form action="{{ route($routeName . '.update', $row) }}" method="post" enctype="multipart/form-data">
             @method('put')
             @include('back-end.' . $routeName . '.form')
             <div class="row">
@@ -22,9 +22,7 @@
                 $url = getYoutubeId($row->youtube);
             @endphp
             @if ($url)
-                <iframe width="350" height="400" src="https://www.youtube.com/embed/{{ $url }}"
-                    title="YouTube video player" frameborder="0" allowfullscreen></iframe>
+                <iframe width="350" src="https://www.youtube.com/embed/{{ $url }}" title="YouTube video player"
+                    frameborder="0" allowfullscreen class="mb-5"></iframe>
             @endif
-        @endslot
-    @endcomponent
-@endsection
+            <img width="350" src="{{ url('uploads/' . $row->image) }}" @endslot @endcomponent @endsection

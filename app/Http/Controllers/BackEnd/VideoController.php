@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\BackEnd;
 
+use App\Models\Tag;
+use App\Models\Skill;
+use App\Models\Video;
+use App\Models\Category;
+use Illuminate\Support\Str;
 use App\Http\Requests\Video\StoreRequest;
 use App\Http\Controllers\BackEnd\BackEndController;
-use App\Models\Category;
-use App\Models\Skill;
-use App\Models\Tag;
-use App\Models\Video;
+use App\Http\Requests\Video\UpdateRequest;
 
 class VideoController extends BackEndController
 {
@@ -40,19 +42,32 @@ class VideoController extends BackEndController
 
     public function store(Video $video, StoreRequest $request)
     {
+        $file = $request->file('image');
+        $fileName = time() . Str::random(10) . '.' . $file->getClientOriginalExtension();
+        $file->move(public_path('uploads'), $fileName);
+
         $requestArray = $request->all();
-        $video = $this->model->create($request->validated() + ['user_id' => auth()->id()]);
+        $video = $this->model->create(['user_id' => auth()->id(), 'image' => $fileName] + $request->validated());
         $this->syncTagsSkills($video, $requestArray);
 
         return redirect()->route('videos.index');
     }
 
-    public function update(Video $video, StoreRequest $request)
+    public function update(Video $video, UpdateRequest $request)
     {
         $requestArray = $request->all();
-        $this->syncTagsSkills($video, $requestArray);
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $fileName = time() . Str::random(10) . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('uploads'), $fileName);
+            $request = ['image' => $fileName] + $request->validated();
+            $this->syncTagsSkills($video, $requestArray);
+            $video->update($request);
+        } else {
+            $this->syncTagsSkills($video, $requestArray);
+            $video->update($request->validated());
+        }
 
-        $video->update($request->validated());
 
         return redirect()->route('videos.index');
     }
