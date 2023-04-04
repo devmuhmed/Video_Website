@@ -24,7 +24,7 @@ use App\Http\Controllers\BackEnd\CategoryController;
 Route::get('/', function () {
     return view('welcome');
 })->name('frontend.landing');
-Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
+Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function () {
     Route::get('/', [HomeController::class, 'index']);
     Route::resource('users', UserController::class)->except('show');
     Route::resource('categories', CategoryController::class)->except('show');
@@ -44,3 +44,8 @@ Route::get('category/{category}', [HomeController::class, 'category'])->name('fr
 Route::get('skill/{skill}', [HomeController::class, 'skills'])->name('front.skill');
 Route::get('tag/{tag}', [HomeController::class, 'tags'])->name('front.tags');
 Route::get('video/{video}', [HomeController::class, 'video'])->name('frontend.video');
+
+Route::group(['middleware' => 'auth'], function () {
+    Route::put('comment/{comment}', [HomeController::class, 'commentUpdate'])->name('front.commentUpdate');
+    Route::post('comment/{video}/create', [HomeController::class, 'commentStore'])->name('front.commentStore');
+});

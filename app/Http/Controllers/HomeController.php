@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
-use App\Models\Skill;
 use App\Models\Tag;
+use App\Models\Skill;
 use App\Models\Video;
+use App\Models\Comment;
+use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Http\Requests\FrontEnd\Comment\Update;
+use App\Http\Requests\FrontEnd\Comment\StoreRequest;
 
 class HomeController extends Controller
 {
@@ -17,7 +20,9 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->only([
+            'index', 'commentStore', 'commentupdate'
+        ]);
     }
 
     /**
@@ -55,5 +60,22 @@ class HomeController extends Controller
     public function video(Video $video)
     {
         return view('front-end.video.index', compact('video'));
+    }
+
+    public function commentUpdate(Comment $comment, Update $request)
+    {
+        if ($comment->user_id == auth()->id() || auth()->user()->group == 'admin') {
+            $comment->update($request->validated());
+        }
+        return redirect()->route('frontend.video', [$comment->video_id, '#comments']);
+    }
+
+    public function commentStore(Video $video, StoreRequest $request)
+    {
+        Comment::create([
+            'user_id' => auth()->id(),
+            'video_id' => $video->id,
+        ] + $request->validated());
+        return redirect()->route('frontend.video', [$video->id, '#comments']);
     }
 }

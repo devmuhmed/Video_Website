@@ -37,12 +37,30 @@
                         @endforeach
                     </div>
                 </li>
-                <li class="nav-item">
-                    <a href="{{ route('login') }}" class="nav-link">login</a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('register') }}" class="nav-link">register</a>
-                </li>
+                @guest
+                    <li class="nav-item">
+                        <a href="{{ route('login') }}" class="nav-link">login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('register') }}" class="nav-link">register</a>
+                    </li>
+                @else
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuLink"
+                            data-toggle="dropdown">
+                            {{ auth()->user()->name }}
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="{{ route('logout') }}"
+                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Logout') }}
+                            </a>
+                            <form action="{{ route('logout') }}" method="post" id="logout-form">
+                                @csrf
+                            </form>
+                        </div>
+                    </li>
+
+                @endguest
             </ul>
         </div>
     </div>
