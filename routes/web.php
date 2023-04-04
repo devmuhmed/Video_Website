@@ -2,8 +2,8 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BackEnd\TagController;
-use App\Http\Controllers\BackEnd\HomeController;
 use App\Http\Controllers\BackEnd\PageController;
 use App\Http\Controllers\BackEnd\UserController;
 use App\Http\Controllers\BackEnd\SkillController;
@@ -23,7 +23,7 @@ use App\Http\Controllers\BackEnd\CategoryController;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('frontend.landing');
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::get('/', [HomeController::class, 'index']);
     Route::resource('users', UserController::class)->except('show');
@@ -39,4 +39,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('category/{category}', [HomeController::class, 'category'])->name('front.category');
+Route::get('skill/{skill}', [HomeController::class, 'skills'])->name('front.skill');
