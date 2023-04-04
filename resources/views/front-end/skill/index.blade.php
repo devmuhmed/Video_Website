@@ -4,7 +4,7 @@
     <div class="section section-button">
         <div class="container">
             <div class="title">
-                <h2> {{ $skill->name }} </h2>
+                <h1> {{ $skill->name }} </h1>
             </div>
             @include('front-end.shared.video-row')
         </div>

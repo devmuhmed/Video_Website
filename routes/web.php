@@ -42,3 +42,5 @@ Auth::routes();
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('category/{category}', [HomeController::class, 'category'])->name('front.category');
 Route::get('skill/{skill}', [HomeController::class, 'skills'])->name('front.skill');
+Route::get('tag/{tag}', [HomeController::class, 'tags'])->name('front.tags');
+Route::get('video/{video}', [HomeController::class, 'video'])->name('frontend.video');
