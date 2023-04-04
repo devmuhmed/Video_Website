@@ -24,3 +24,20 @@
         </div>
     </div>
 </div>
+<div class="col-md-6">
+    @php
+        $input = 'group';
+    @endphp
+    <label for="{{ $input }}">{{ $moduleName }} Group</label>
+    <div class="input-group mb-5">
+        <select name="{{ $input }}">
+            <option value="admin" {{ isset($row) && $row->{$input} == 'admin' ? 'selected' : '' }}>admin</option>
+            <option value="user" {{ isset($row) && $row->{$input} == 'user' ? 'selected' : '' }}>user</option>
+        </select>
+    </div>
+    @error($input)
+        <span class="text-danger" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+    @enderror
+</div>

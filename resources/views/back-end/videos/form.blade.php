@@ -58,9 +58,7 @@
         <div class="input-group mb-5">
             <select name="{{ $input }}">
                 <option value="1" {{ isset($row) && $row->{$input} == 1 ? 'selected' : '' }}>published</option>
-                <option value="0" {{ isset($row) && $row->{$input} == 1 ? 'selected' : '' }}>hidden</option>
-                {{-- <option value="1">published</option>
-                <option value="0">hidden</option> --}}
+                <option value="0" {{ isset($row) && $row->{$input} == 0 ? 'selected' : '' }}>hidden</option>
             </select>
         </div>
         @error($input)

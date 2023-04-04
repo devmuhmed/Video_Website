@@ -24,6 +24,7 @@ class UpdateRequest extends FormRequest
         return [
             'name' => 'required|string|min:3|max:191',
             'email' => 'required|string|email|unique:users,id',
+            'group' => 'required',
         ];
     }
 }
