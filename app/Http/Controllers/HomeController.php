@@ -12,6 +12,7 @@ use App\Http\Requests\FrontEnd\Comment\Update;
 use App\Http\Requests\FrontEnd\Comment\StoreRequest;
 use App\Http\Requests\FrontEnd\Contact\StoreRequest as ContactStoreRequest;
 use App\Models\Contact;
+use App\Models\Page;
 
 class HomeController extends Controller
 {
@@ -95,5 +96,10 @@ class HomeController extends Controller
         $commentsCount = Comment::count();
         $tagsCount = Tag::count();
         return view('welcome', compact('videos', 'videosCount', 'commentsCount', 'tagsCount'));
+    }
+
+    public function page(Page $page, $slug = null)
+    {
+        return view('front-end.page.index', compact('page'));
     }
 }

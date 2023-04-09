@@ -34,6 +34,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function 
     Route::post('comments', [VideoController::class, 'commentStore'])->name('comments.store');
     Route::get('comments/{comment}', [VideoController::class, 'commentDelete'])->name('comments.destroy');
     Route::put('comments/{comment}', [VideoController::class, 'commentUpdate'])->name('comments.update');
+    Route::get('page/{page}/{slug?}', [HomeController::class, 'page'])->name('front.page');
 });
 
 Auth::routes();

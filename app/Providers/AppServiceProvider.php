@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Category;
+use App\Models\Page;
 use App\Models\Skill;
 use Illuminate\Support\ServiceProvider;
 
@@ -23,5 +24,6 @@ class AppServiceProvider extends ServiceProvider
     {
         view()->share('categories', Category::get());
         view()->share('skills', Skill::get());
+        view()->share('pages', Page::get());
     }
 }
