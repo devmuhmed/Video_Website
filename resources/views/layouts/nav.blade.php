@@ -59,7 +59,13 @@
                             </form>
                         </div>
                     </li>
-
+                    <li class="mt-3">
+                        <form action="{{ route('home') }}" class="form-inline ml-auto">
+                            <div class="form-group has-white">
+                                <input type="text" name="search" class="form-control" placeholder="Search">
+                            </div>
+                        </form>
+                    </li>
                 @endguest
             </ul>
         </div>
