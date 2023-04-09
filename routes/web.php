@@ -21,10 +21,7 @@ use App\Http\Controllers\BackEnd\ContactController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
-})->name('frontend.landing');
+// admin
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function () {
     Route::get('/', [HomeController::class, 'index']);
     Route::resource('users', UserController::class)->except('show');
@@ -41,6 +38,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function 
 
 Auth::routes();
 
+// vistor
+Route::get('/', [HomeController::class, 'welcome'])->name('frontend.landing');
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('category/{category}', [HomeController::class, 'category'])->name('front.category');
 Route::get('skill/{skill}', [HomeController::class, 'skills'])->name('front.skill');

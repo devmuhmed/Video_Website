@@ -23,7 +23,7 @@ class HomeController extends Controller
     public function __construct()
     {
         $this->middleware('auth')->only([
-            'index', 'commentStore', 'commentupdate'
+            'commentStore', 'commentupdate'
         ]);
     }
 
@@ -86,5 +86,14 @@ class HomeController extends Controller
         Contact::create($request->all());
 
         return redirect()->route('frontend.landing');
+    }
+
+    public function welcome()
+    {
+        $videos = Video::orderBy('id', 'desc')->paginate(9);
+        $videosCount = Video::count();
+        $commentsCount = Comment::count();
+        $tagsCount = Tag::count();
+        return view('welcome', compact('videos', 'videosCount', 'commentsCount', 'tagsCount'));
     }
 }
