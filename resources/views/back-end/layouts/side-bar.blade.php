@@ -112,6 +112,14 @@
                                 <span class="menu-title">videos</span>
                             </a>
                         </div>
+                        <div class="menu-item">
+                            <a class="menu-link" href="{{ route('contacts.index') }}">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">contacts</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>

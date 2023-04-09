@@ -9,6 +9,7 @@ use App\Http\Controllers\BackEnd\UserController;
 use App\Http\Controllers\BackEnd\SkillController;
 use App\Http\Controllers\BackEnd\VideoController;
 use App\Http\Controllers\BackEnd\CategoryController;
+use App\Http\Controllers\BackEnd\ContactController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +33,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function 
     Route::resource('tags', TagController::class)->except('show');
     Route::resource('pages', PageController::class)->except('show');
     Route::resource('videos', VideoController::class)->except('show');
+    Route::resource('contacts', ContactController::class)->only('index', 'destroy', 'edit');
     Route::post('comments', [VideoController::class, 'commentStore'])->name('comments.store');
     Route::get('comments/{comment}', [VideoController::class, 'commentDelete'])->name('comments.destroy');
     Route::put('comments/{comment}', [VideoController::class, 'commentUpdate'])->name('comments.update');
@@ -44,6 +46,7 @@ Route::get('category/{category}', [HomeController::class, 'category'])->name('fr
 Route::get('skill/{skill}', [HomeController::class, 'skills'])->name('front.skill');
 Route::get('tag/{tag}', [HomeController::class, 'tags'])->name('front.tags');
 Route::get('video/{video}', [HomeController::class, 'video'])->name('frontend.video');
+Route::post('contact-us', [HomeController::class, 'contact'])->name('contact.store');
 
 Route::group(['middleware' => 'auth'], function () {
     Route::put('comment/{comment}', [HomeController::class, 'commentUpdate'])->name('front.commentUpdate');

@@ -10,6 +10,8 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Requests\FrontEnd\Comment\Update;
 use App\Http\Requests\FrontEnd\Comment\StoreRequest;
+use App\Http\Requests\FrontEnd\Contact\StoreRequest as ContactStoreRequest;
+use App\Models\Contact;
 
 class HomeController extends Controller
 {
@@ -77,5 +79,12 @@ class HomeController extends Controller
             'video_id' => $video->id,
         ] + $request->validated());
         return redirect()->route('frontend.video', [$video->id, '#comments']);
+    }
+
+    public function contact(ContactStoreRequest $request)
+    {
+        Contact::create($request->all());
+
+        return redirect()->route('frontend.landing');
     }
 }
