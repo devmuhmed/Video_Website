@@ -13,6 +13,7 @@ use App\Http\Requests\FrontEnd\Comment\StoreRequest;
 use App\Http\Requests\FrontEnd\Contact\StoreRequest as ContactStoreRequest;
 use App\Models\Contact;
 use App\Models\Page;
+use App\Models\User;
 
 class HomeController extends Controller
 {
@@ -105,5 +106,10 @@ class HomeController extends Controller
     public function page(Page $page, $slug = null)
     {
         return view('front-end.page.index', compact('page'));
+    }
+
+    public function profile(User $user, $slug = null)
+    {
+        return view('front-end.profile.index', compact('user'));
     }
 }

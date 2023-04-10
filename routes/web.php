@@ -35,6 +35,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function 
     Route::get('comments/{comment}', [VideoController::class, 'commentDelete'])->name('comments.destroy');
     Route::put('comments/{comment}', [VideoController::class, 'commentUpdate'])->name('comments.update');
     Route::get('page/{page}/{slug?}', [HomeController::class, 'page'])->name('front.page');
+    Route::get('profile/{user}/{slug?}', [HomeController::class, 'profile'])->name('front.profile');
 });
 
 Auth::routes();
