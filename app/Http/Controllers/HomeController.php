@@ -11,9 +11,11 @@ use Illuminate\Http\Request;
 use App\Http\Requests\FrontEnd\Comment\Update;
 use App\Http\Requests\FrontEnd\Comment\StoreRequest;
 use App\Http\Requests\FrontEnd\Contact\StoreRequest as ContactStoreRequest;
+use App\Http\Requests\FrontEnd\User\UpdateRequest;
 use App\Models\Contact;
 use App\Models\Page;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class HomeController extends Controller
 {
@@ -25,7 +27,7 @@ class HomeController extends Controller
     public function __construct()
     {
         $this->middleware('auth')->only([
-            'commentStore', 'commentupdate'
+            'commentStore', 'commentupdate', 'profileUpdate'
         ]);
     }
 
@@ -111,5 +113,17 @@ class HomeController extends Controller
     public function profile(User $user, $slug = null)
     {
         return view('front-end.profile.index', compact('user'));
+    }
+
+    public function profileUpdate(User $user, UpdateRequest $request)
+    {
+        $data = $request->validated();
+        if ($request->password != '') {
+            $data = $request->all();
+            $data = ['password' => Hash::make($request->password)] + $request->validated();
+        }
+        $user->update($data);
+
+        return redirect()->route('front.profile', ['user' => $user, 'slug' => slug($user->name)]);
     }
 }

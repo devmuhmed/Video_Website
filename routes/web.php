@@ -35,7 +35,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function 
     Route::get('comments/{comment}', [VideoController::class, 'commentDelete'])->name('comments.destroy');
     Route::put('comments/{comment}', [VideoController::class, 'commentUpdate'])->name('comments.update');
     Route::get('page/{page}/{slug?}', [HomeController::class, 'page'])->name('front.page');
-    Route::get('profile/{user}/{slug?}', [HomeController::class, 'profile'])->name('front.profile');
 });
 
 Auth::routes();
@@ -48,8 +47,10 @@ Route::get('skill/{skill}', [HomeController::class, 'skills'])->name('front.skil
 Route::get('tag/{tag}', [HomeController::class, 'tags'])->name('front.tags');
 Route::get('video/{video}', [HomeController::class, 'video'])->name('frontend.video');
 Route::post('contact-us', [HomeController::class, 'contact'])->name('contact.store');
+Route::get('profile/{user}/{slug?}', [HomeController::class, 'profile'])->name('front.profile');
 
 Route::group(['middleware' => 'auth'], function () {
     Route::put('comment/{comment}', [HomeController::class, 'commentUpdate'])->name('front.commentUpdate');
     Route::post('comment/{video}/create', [HomeController::class, 'commentStore'])->name('front.commentStore');
+    Route::put('profile/{user}', [HomeController::class, 'profileUpdate'])->name('profile.update');
 });

@@ -15,11 +15,16 @@
                     <h6 class="description">{{ $user->email }}</h6>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-6 ml-auto mr-auto mt-4 text-center">
-                    <btn class="btn btn-outline-default btn-round"><i class="fa fa-cog"></i> Settings</btn>
-                </div>
-            </div>
+            @auth
+                @if ($user->id == auth()->id())
+                    <div class="row">
+                        <div class="col-md-6 ml-auto mr-auto mt-4 text-center">
+                            <btn class="btn btn-outline-default btn-round"><i class="fa fa-cog"></i> Update Profile</btn>
+                        </div>
+                    </div>
+                    @include('front-end.profile.edit', ['user' => $user])
+                @endif
+            @endauth
         </div>
     </div>
 
